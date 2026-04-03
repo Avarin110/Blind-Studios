@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blind Studios | Elite Development & Design</title>
+    
+    <link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #000000;
+            --card: #080808;
+            --blue: #007BFF;
+            --blue-glow: rgba(0, 123, 255, 0.4);
+            --text: #ffffff;
+            --text-dim: #888888;
+            --font-main: 'Satoshi', sans-serif;
+            --font-tech: 'Space Grotesk', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; position: relative; z-index: 2; }
+
+        /* Animated Glow Blobs */
+        .blob {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--blue-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+            filter: blur(100px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .blob-1 { top: -10%; left: -10%; animation: move 25s infinite alternate; }
+        .blob-2 { bottom: -10%; right: -10%; animation: move 20s infinite alternate-reverse; }
+
+        @keyframes move {
+            from { transform: translate(-5%, -5%) scale(1); }
+            to { transform: translate(15%, 15%) scale(1.2); }
+        }
+
+        /* Navigation */
+        nav {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+        }
+        .brand { font-family: var(--font-tech); font-weight: 700; font-size: 1.4rem; letter-spacing: -1px; }
+        .blue { color: var(--blue); text-shadow: 0 0 15px var(--blue); }
+
+        /* Hero Section */
+        .hero { padding: 150px 0 100px; text-align: center; }
+        .hero h1 {
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            font-weight: 900;
+            letter-spacing: -5px;
+            line-height: 0.85;
+            margin-bottom: 30px;
+        }
+        .hero p {
+            font-family: var(--font-tech);
+            color: var(--text-dim);
+            font-size: 1rem;
+            max-width: 650px;
+            margin: 0 auto 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-section { padding: 100px 0; }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+        .portfolio-item {
+            background: var(--card);
+            border: 1px solid #111;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .portfolio-item:hover {
+            border-color: var(--blue);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.2);
+        }
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            border-bottom: 1px solid #111;
+            background: #050505; /* Placeholder color while loading */
+        }
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .portfolio-info { padding: 25px; }
+        .portfolio-info h4 {
+            font-family: var(--font-tech);
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .portfolio-info p {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        /* Shared Components */
+        .btn {
+            background: var(--blue);
+            color: white;
+            padding: 18px 45px;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: var(--font-tech);
+            transition: 0.4s;
+            display: inline-block;
+            border: 1px solid var(--blue);
+            text-transform: uppercase;
+        }
+        .btn:hover { background: transparent; box-shadow: 0 0 30px var(--blue); }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 16px;
+            border: 1px solid var(--blue);
+            color: var(--blue);
+            font-family: var(--font-tech);
+            font-size: 0.7rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 80px 0;
+            border-top: 1px solid #111;
+            border-bottom: 1px solid #111;
+            margin: 50px 0 120px;
+            text-align: center;
+        }
+        .stat-item h4 { font-size: 4rem; font-weight: 900; }
+        .stat-item p { font-family: var(--font-tech); color: var(--blue); font-size: 0.8rem; text-transform: uppercase; }
+
+        /* Footer */
+        footer {
+            padding: 100px 0 50px;
+            border-top: 1px solid #111;
+            text-align: center;
+            font-family: var(--font-tech);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 4px;
+        }
+
+        @media (max-width: 992px) {
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 4rem; }
+            .stats-bar { grid-template-columns: 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container">
+        <nav data-aos="fade-down">
+            <div class="brand">BLIND <span class="blue">STUDIOS</span></div>
+            <a href="https://discord.gg/7zeBFNrw" class="blue" style="text-decoration: none; font-weight: 700;">[ JOIN PORTAL ]</a>
+        </nav>
+
+        <section class="hero">
+            <div class="tag" data-aos="fade-down">Open For Commissions</div>
+            <h1 data-aos="fade-up">THE NEXT <br> <span class="blue">FRONTIER</span></h1>
+            <p data-aos="fade-up" data-aos-delay="200">Roblox Environments • Web Dashboards • Discord Systems</p>
+            <div data-aos="fade-up" data-aos-delay="400">
+                <a href="https://discord.gg/7zeBFNrw" class="btn">ENTER STUDIO</a>
+            </div>
+        </section>
+
+        <section class="portfolio-section">
+            <div class="section-header" data-aos="fade-up" style="text-align: center; margin-bottom: 50px;">
+                <span class="tag">Portfolio</span>
+                <h2 style="font-size: 3rem;">FEATURED WORK</h2>
+            </div>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-aos="fade-up">
+                    <div class="portfolio-image"><img src="Screenshot 2026-04-03 2.57.43 PM.png"></div>
+                    <div class="portfolio-info"><h4>Wooden Hub</h4><p>Environment Design</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="50">
+                    <div class="portfolio-image"><img src="image_e8d686.png"></div>
+                    <div class="portfolio-info"><h4>Rocket Plaza</h4><p>Stylized Build</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-image"><img src="image_e8d6e1.png"></div>
+                    <div class="portfolio-info"><h4>War Zone</h4><p>Map Design</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up">
+                    <div class="portfolio-image"><img src="image_e8d9c9.jpg"></div>
+                    <div class="portfolio-info"><h4>Coastal Grid</h4><p>Terrain Mapping</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="50">
+                    <div class="portfolio-image"><img src="image_e8da2a.png"></div>
+                    <div class="portfolio-info"><h4>Cartoon World</h4><p>Thematic Level</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-image"><img src="image_e8da85.png"></div>
+                    <div class="portfolio-info"><h4>Floating Island</h4><p>Voxel Build</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up">
+                    <div class="portfolio-image"><img src="image_e8dac6.jpg"></div>
+                    <div class="portfolio-info"><h4>Club Bloxy</h4><p>Lighting Design</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="50">
+                    <div class="portfolio-image"><img src="image_e8ddf0.jpg"></div>
+                    <div class="portfolio-info"><h4>Fantasy Village</h4><p>Medieval Scene</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-image"><img src="image_e8de65.png"></div>
+                    <div class="portfolio-info"><h4>SWAT Unit</h4><p>Asset Texturing</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up">
+                    <div class="portfolio-image"><img src="image_e8dea5.png"></div>
+                    <div class="portfolio-info"><h4>Sky City</h4><p>Infrastructure</p></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="stats-bar" data-aos="fade-up">
+            <div class="stat-item"><h4>250+</h4><p>Members</p></div>
+            <div class="stat-item"><h4>15+</h4><p>Partners</p></div>
+            <div class="stat-item"><h4>24/7</h4><p>Online</p></div>
+        </div>
+
+        <footer>
+            <p>BLIND STUDIOS &copy; 2026 • ALL RIGHTS RESERVED</p>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+</body>
+</html>
