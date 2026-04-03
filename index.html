@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blind Studios | Elite Development & Design</title>
+    
+    <link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #000000;
+            --card: #080808;
+            --blue: #007BFF;
+            --blue-glow: rgba(0, 123, 255, 0.4);
+            --text: #ffffff;
+            --text-dim: #888888;
+            --font-main: 'Satoshi', sans-serif;
+            --font-tech: 'Space Grotesk', sans-serif;
+        }
+
+        /* Basic Setup */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; position: relative; z-index: 2; }
+
+        /* Animated Glow Blobs */
+        .blob {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--blue-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+            filter: blur(100px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .blob-1 { top: -10%; left: -10%; animation: move 25s infinite alternate; }
+        .blob-2 { bottom: -10%; right: -10%; animation: move 20s infinite alternate-reverse; }
+
+        @keyframes move {
+            from { transform: translate(-5%, -5%) scale(1); }
+            to { transform: translate(15%, 15%) scale(1.2); }
+        }
+
+        /* Navigation */
+        nav {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+        }
+        .brand { font-family: var(--font-tech); font-weight: 700; font-size: 1.4rem; letter-spacing: -1px; }
+        .blue { color: var(--blue); text-shadow: 0 0 15px var(--blue); }
+
+        /* Hero Section */
+        .hero { padding: 150px 0 100px; text-align: center; }
+        .hero h1 {
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            font-weight: 900;
+            letter-spacing: -5px;
+            line-height: 0.85;
+            margin-bottom: 30px;
+        }
+        .hero p {
+            font-family: var(--font-tech);
+            color: var(--text-dim);
+            font-size: 1rem;
+            max-width: 650px;
+            margin: 0 auto 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Portfolio Grid Section */
+        .portfolio-section { padding: 100px 0; }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+        .portfolio-item {
+            background: var(--card);
+            border: 1px solid #111;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+        }
+        .portfolio-item:hover {
+            border-color: var(--blue);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
+        }
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            border-bottom: 1px solid #111;
+        }
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s ease;
+        }
+        .portfolio-item:hover .portfolio-image img { transform: scale(1.05); }
+        
+        .portfolio-info { padding: 25px; }
+        .portfolio-info h4 {
+            font-family: var(--font-tech);
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .portfolio-info p {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Shared Components */
+        .btn {
+            background: var(--blue);
+            color: white;
+            padding: 18px 45px;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: var(--font-tech);
+            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            display: inline-block;
+            border: 1px solid var(--blue);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        .btn:hover { background: transparent; box-shadow: 0 0 30px var(--blue); transform: translateY(-3px); }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 16px;
+            border: 1px solid var(--blue);
+            color: var(--blue);
+            font-family: var(--font-tech);
+            font-size: 0.7rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 80px 0;
+            border-top: 1px solid #111;
+            border-bottom: 1px solid #111;
+            margin: 50px 0 120px;
+            background: rgba(255,255,255,0.01);
+            text-align: center;
+        }
+        .stat-item h4 { font-size: 4rem; font-weight: 900; line-height: 1; }
+        .stat-item p { font-family: var(--font-tech); color: var(--blue); font-size: 0.8rem; text-transform: uppercase; margin-top: 5px;}
+
+        /* Services Grid */
+        .section-header { margin-bottom: 60px; text-align: center; }
+        .section-header h2 { font-size: 3.5rem; letter-spacing: -2px; }
+
+        .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 150px; }
+        .service-card {
+            background: var(--card);
+            border: 1px solid #111;
+            padding: 60px 40px;
+            transition: 0.5s;
+        }
+        .service-card:hover { border-color: var(--blue); transform: translateY(-5px); }
+        .service-card h3 { font-family: var(--font-tech); font-size: 1.6rem; margin-bottom: 20px; text-transform: uppercase; }
+        .service-card p { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 25px; }
+        .service-card ul { list-style: none; color: #555; font-size: 0.85rem; font-family: var(--font-tech); }
+        .service-card ul li { margin-bottom: 8px; border-left: 2px solid var(--blue); padding-left: 10px; }
+
+        /* Roadmap Section */
+        .roadmap { padding: 100px 0; border-top: 1px solid #111; }
+        .step { display: flex; align-items: flex-start; margin-bottom: 60px; gap: 40px; }
+        .step-num { font-size: 4rem; font-weight: 900; color: #111; line-height: 0.8; -webkit-text-stroke: 1px #222; }
+        .step-content h4 { font-family: var(--font-tech); font-size: 1.5rem; margin-bottom: 10px; text-transform: uppercase; color: var(--blue); }
+        .step-content p { color: var(--text-dim); max-width: 500px; }
+
+        /* FAQ Section */
+        .faq-section { padding: 100px 0; background: #020202; }
+        .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .faq-item { padding: 30px; border-bottom: 1px solid #111; }
+        .faq-item h5 { font-family: var(--font-tech); margin-bottom: 15px; color: var(--text); text-transform: uppercase; }
+        .faq-item p { font-size: 0.9rem; color: var(--text-dim); }
+
+        /* CTA */
+        .cta-box {
+            background: linear-gradient(to right, #000, #050505);
+            border: 1px solid var(--blue);
+            padding: 100px 60px;
+            text-align: center;
+            margin: 150px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-box h2 { font-size: 4rem; letter-spacing: -2px; margin-bottom: 20px; }
+
+        /* Footer */
+        footer {
+            padding: 100px 0 50px;
+            border-top: 1px solid #111;
+            text-align: center;
+            font-family: var(--font-tech);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 4px;
+        }
+
+        @media (max-width: 992px) {
+            .service-grid, .faq-grid, .portfolio-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 4rem; }
+            .stats-bar { grid-template-columns: 1fr; gap: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container">
+        <nav data-aos="fade-down">
+            <div class="brand">BLIND <span class="blue">STUDIOS</span></div>
+            <a href="https://discord.gg/7zeBFNrw" class="blue" style="text-decoration: none; font-weight: 700;">[ JOIN PORTAL ]</a>
+        </nav>
+
+        <section class="hero">
+            <div class="tag" data-aos="fade-down">Now Open For Partnerships</div>
+            <h1 data-aos="fade-up" data-aos-duration="1200">THE NEXT <br> <span class="blue">FRONTIER</span></h1>
+            <p data-aos="fade-up" data-aos-delay="200">Digital Capes • Web Architecture • Game Development • Elite Staffing</p>
+            <div data-aos="fade-up" data-aos-delay="400">
+                <a href="https://discord.gg/7zeBFNrw" class="btn">ENTER THE STUDIO</a>
+            </div>
+        </section>
+
+        <section class="portfolio-section">
+            <div class="section-header" data-aos="fade-up">
+                <span class="tag">Showcase</span>
+                <h2>ENVIRONMENT GALLERY</h2>
+            </div>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-aos="fade-up">
+                    <div class="portfolio-image"><img src="Screenshot 2026-04-03 2.57.43 PM.png"></div>
+                    <div class="portfolio-info"><h4>Wooden Hub</h4><p>Interior Architecture</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-image"><img src="image_e8d686.png"></div>
+                    <div class="portfolio-info"><h4>Rocket Plaza</h4><p>Stylized Urban Design</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-image"><img src="image_e8d6e1.png"></div>
+                    <div class="portfolio-info"><h4>Battlefield</h4><p>Atmospheric Environment</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up">
+                    <div class="portfolio-image"><img src="image_e8d9c9.jpg"></div>
+                    <div class="portfolio-info"><h4>Coastal Grid</h4><p>Large Scale Terrain</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-image"><img src="image_e8da2a.png"></div>
+                    <div class="portfolio-info"><h4>Cartoon Map</h4><p>Thematic Assets</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-image"><img src="image_e8da85.png"></div>
+                    <div class="portfolio-info"><h4>Floating Island</h4><p>Low-Poly Voxel</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up">
+                    <div class="portfolio-image"><img src="image_e8dac6.jpg"></div>
+                    <div class="portfolio-info"><h4>Club Bloxy</h4><p>Interior Lighting</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-image"><img src="image_e8ddf0.jpg"></div>
+                    <div class="portfolio-info"><h4>Fantasy Village</h4><p>Level Design</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-image"><img src="image_e8de65.png"></div>
+                    <div class="portfolio-info"><h4>Tactical SWAT</h4><p>Custom Texturing</p></div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up">
+                    <div class="portfolio-image"><img src="image_e8dea5.png"></div>
+                    <div class="portfolio-info"><h4>Sky Hub</h4><p>Floating Infrastructure</p></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="stats-bar" data-aos="fade-up">
+            <div class="stat-item">
+                <h4>250+</h4>
+                <p>Global Members</p>
+            </div>
+            <div class="stat-item">
+                <h4>15+</h4>
+                <p>Strategic Partners</p>
+            </div>
+            <div class="stat-item">
+                <h4>24/7</h4>
+                <p>Operations</p>
+            </div>
+        </div>
+
+        <div class="section-header" data-aos="fade-up">
+            <span class="tag">Capabilities</span>
+            <h2>STUDIO SERVICES</h2>
+        </div>
+
+        <div class="service-grid">
+            <div class="card service-card" data-aos="fade-right">
+                <h3 class="blue">Capes</h3>
+                <p>Exclusive digital cosmetics. We design, render, and deploy high-fidelity capes.</p>
+                <ul><li>Custom Physics</li><li>Brand Integration</li><li>Unique Textures</li></ul>
+            </div>
+            <div class="card service-card" data-aos="fade-up">
+                <h3 class="blue">Web Dev</h3>
+                <p>From SaaS platforms to portals. We build fast, responsive web environments.</p>
+                <ul><li>React & Tailwind</li><li>SaaS Dashboards</li><li>API Development</li></ul>
+            </div>
+            <div class="card service-card" data-aos="fade-left">
+                <h3 class="blue">Game Dev</h3>
+                <p>Complete game production. Professional engineering and design.</p>
+                <ul><li>Level Architecture</li><li>Scripting Systems</li><li>NPC AI Logic</li></ul>
+            </div>
+        </div>
+
+        <section class="roadmap">
+            <div class="section-header" data-aos="fade-up">
+                <span class="tag">Execution</span>
+                <h2>OUR PROCESS</h2>
+            </div>
+            <div class="step" data-aos="fade-right">
+                <div class="step-num">01</div>
+                <div class="step-content"><h4>Discovery</h4><p>We analyze your requirements and define the technical scope.</p></div>
+            </div>
+            <div class="step" data-aos="fade-left">
+                <div class="step-num">02</div>
+                <div class="step-content"><h4>Production</h4><p>Our elite staff and developers begin the build phase.</p></div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <div class="section-header" data-aos="fade-up">
+                <span class="tag">Support</span>
+                <h2>FAQ</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item" data-aos="fade-up"><h5>How do I partner?</h5><p>Partnerships are processed through our Discord portal.</p></div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100"><h5>Staff Availability?</h5><p>Active across multiple time zones for 24/7 support.</p></div>
+            </div>
+        </section>
+
+        <div class="cta-box" data-aos="zoom-in">
+            <span class="tag">Ready?</span>
+            <h2>JOIN BLIND STUDIOS</h2>
+            <p style="color: #666; margin-bottom: 40px; font-family: var(--font-tech);">Access 15+ partnerships and our elite development circle.</p>
+            <a href="https://discord.gg/7zeBFNrw" class="btn">CLAIM YOUR SPOT</a>
+        </div>
+
+        <footer>
+            <p>BLIND STUDIOS &copy; 2026 • ALL RIGHTS RESERVED</p>
+            <p style="margin-top: 15px; color: #222; letter-spacing: 1px;">DESIGNED & DEVELOPED BY AXON</p>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: false,
+            mirror: true,
+            easing: 'ease-out-quart'
+        });
+    </script>
+</body>
+</html>
