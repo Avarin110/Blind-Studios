@@ -94,7 +94,14 @@
             transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
         .portfolio-card:hover { border-color: var(--blue); transform: translateY(-5px); }
-        .portfolio-card img { width: 100%; height: 350px; object-fit: cover; display: block; border-bottom: 1px solid #111; }
+        .portfolio-card img { 
+            width: 100%; 
+            height: 350px; 
+            object-fit: cover; 
+            display: block; 
+            border-bottom: 1px solid #111; 
+            image-rendering: -webkit-optimize-contrast;
+        }
         .portfolio-card .info { padding: 25px; }
         .portfolio-card h4 { font-family: var(--font-tech); text-transform: uppercase; font-size: 1.1rem; color: var(--blue); }
 
@@ -220,7 +227,7 @@
                 <div class="info"><h4>Voxel Design</h4></div>
             </div>
             <div class="portfolio-card" data-aos="fade-up">
-                <img src="https://i.ibb.co/TzbYh0Q/img2.webp">
+                <img src="https://i.ibb.co/HTnX5rvW/Image.png">
                 <div class="info"><h4>Asset Showcase</h4></div>
             </div>
         </div>
